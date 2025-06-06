@@ -48,10 +48,9 @@ document.addEventListener("DOMContentLoaded", () =>  {
         
             if (response.ok) {
                 const result = await response.json();
-                //console.log(result) // Ensure you parse the JSON response
                 alert("Login successful",result);
                 localStorage.setItem("token", result.token);
-                localStorage.setItem("userId", result.userId); // Store the token
+                localStorage.setItem("userId", result.userId);
                 window.location.href = "./group.html";
             }
             else{
