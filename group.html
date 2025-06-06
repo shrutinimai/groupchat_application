@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Chat Application</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="groupBody">
+    <div class="container">
+        <div class="left-sidebar">
+            <h2 id="groupH2">All Groups</h2>
+            <div class="groupCreationSection">
+                <form id="createGroupForm">
+                    <input type="text" id="groupNameInput" placeholder="Enter group name" required>
+                    <button id="createGroup" type="submit">CreateGroup</button>
+                </form>
+            </div>
+            <div id="groupList"></div>
+        </div>
+        <div class="right-sidebar">
+            <div id="groupChat" class="group-chat">
+                <div id="groupInfo">
+                    <h2 id="groupName"></h2>
+                    <button id="addAdminButton" style="display: none;">Admin+</button>
+                    <button id="addGroupMemberButton" style="display: none;">Add+</button>
+                    <button id="leaveGroupButton" style="display: none;">Leave</button>
+                    <button id="deleteGroupMemberButton" style="display: none;">Delete</button>
+                </div> 
+                <div id="groupMessages"></div>
+                <form id="groupMessageForm">
+                    <input type="text" id="messageInput" placeholder="Type your message..." required>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding group members -->
+    <div id="addMemberModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
+        <h3 id="modalTitle">Add/Remove Group Members</h3>
+        <ul id="userList"></ul> 
+        <button id="closeModal">Close</button>
+    </div>
+
+    <!-- Modal for invitation alert -->
+    <div id="invitationAlert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
+        <p id="invitationMessage"></p>
+        <button id="acceptInvitation">Accept</button>
+        <button id="rejectInvitation">Reject</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/script/group.js"></script>
+
+</body>
+
+</html>
