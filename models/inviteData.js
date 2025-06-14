@@ -31,11 +31,11 @@ const Invite = sequelize.define("Invite", {
     timestamps: false,
 });
 
-(async () => {
-    try {
-        await Invite.sync({ force: false });
-    } catch (error) {
-        console.error("Error synchronizing the GroupMember model:", error);
-    }
-})();
+// (async () => {
+//     try {
+//         await Invite.sync({ force: false });
+//     } catch (error) {
+//         console.error("Error synchronizing the GroupMember model:", error);
+//     }
+// })();
 module.exports = Invite;

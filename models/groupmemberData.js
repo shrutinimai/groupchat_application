@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-const User = require("./loginData"); 
+const User = require("./loginData");
+const Group = require("./groupData"); // Import the Group model
+
 
 const GroupMember = sequelize.define("GroupMember", {
     id: {
@@ -37,9 +39,16 @@ const GroupMember = sequelize.define("GroupMember", {
     timestamps: false // Disable automatic timestamps since we are defining joined_at
 });
 
+// Associations (can also be done in a central index.js for models)
+// GroupMember belongs to a User
+GroupMember.belongsTo(User, { foreignKey: "user_id" });
+// GroupMember belongs to a Group
+GroupMember.belongsTo(Group, { foreignKey: "group_id" });
+
 (async () => {
     try {
         await GroupMember.sync({ force: false });
+        console.log("GroupMember model synchronized.");
     } catch (error) {
         console.error("Error synchronizing the GroupMember model:", error);
     }

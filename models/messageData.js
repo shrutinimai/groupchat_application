@@ -30,14 +30,14 @@ const Message = sequelize.define("message", {
 });
 
 // Set up the association
-Message.belongsTo(User, { foreignKey: 'userId' });
+// Message.belongsTo(User, { foreignKey: 'userId' });
 
-(async () => {
-    try {
-        await Message.sync({ force: false });
-    } catch (error) {
-        console.error("Error synchronizing the Message model:", error);
-    }
-})();
+// (async () => {
+//     try {
+//         await Message.sync({ force: false });
+//     } catch (error) {
+//         console.error("Error synchronizing the Message model:", error);
+//     }
+// })();
 
 module.exports = Message;

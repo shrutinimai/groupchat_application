@@ -30,12 +30,12 @@ const Group = sequelize.define("Group", {
 });
 
 
-(async () => {
-    try {
-        await Group.sync({ force: false });
-    } catch (error) {
-        console.error("Error synchronizing the Group model:", error);
-    }
-})();
+// (async () => {
+//     try {
+//         await Group.sync({ force: false });
+//     } catch (error) {
+//         console.error("Error synchronizing the Group model:", error);
+//     }
+// })();
 
 module.exports = Group;
