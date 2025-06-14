@@ -1,4 +1,4 @@
-const { Op } = require("sequelize"); // Ensure Op is imported
+const { Op } = require("sequelize"); 
 const User = require('../models/loginData'); 
 const Message = require("../models/messageData");
 
@@ -7,17 +7,15 @@ const messageControl = {
         const lastId = req.query.lastId ? parseInt(req.query.lastId) : -1; // Parse lastId
 
         try {
-            // If lastId is -1, fetch all messages
             const messages = await Message.findAll({
                 where: {
                     id: {
-                        [Op.gt]: lastId // Fetch messages with ID greater than lastId
+                        [Op.gt]: lastId 
                     }
                 },
                 include: [{ model: User, attributes: ['name'] }]
             });
             
-            // Format messages as before
             const formattedMessages = messages.map(msg => ({
                 id: msg.id,
                 message: msg.message,
@@ -28,7 +26,7 @@ const messageControl = {
                 updatedAt: msg.updatedAt,
             }));
             
-            return res.json(formattedMessages); // Return formatted messages
+            return res.json(formattedMessages); 
         } catch (error) {
             console.error("Error retrieving messages:", error);
             return res.status(500).send('Error retrieving messages');

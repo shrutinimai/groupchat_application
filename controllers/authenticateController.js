@@ -1,13 +1,18 @@
-const User = require("../models/loginData");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
+
+const db = require("../models");
+const User = db.User; 
 
 const authenticateUser = {
     signUp: async(req,res) => {
         const {name,email,phone,password} = req.body;
         try{
-            const existingUser = await User.findByEmail(email);
+            
+            const existingUser = await User.findOne({ where: { email: email } }); 
+            
             if(existingUser){
                 return res.status(400).json("User already exists");
             }
@@ -21,10 +26,10 @@ const authenticateUser = {
 
         }
     },
-login: async (req, res) => {
+    login: async (req, res) => {
         const { email, password } = req.body;
         try {
-            const user = await User.findByEmail(email);
+            const user = await User.findOne({ where: { email: email } }); 
             if (!user) {
                 return res.status(400).json("email not found");
             }
@@ -32,12 +37,13 @@ login: async (req, res) => {
             if (!isValidPassword) {
                 return res.status(400).json("password incorrect");
             }
-            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET); // Ensure user.id is correct
-            res.status(200).json({ token, message: "success" ,userId:user.id}); // Return token in JSON
+            const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET); 
+            res.status(200).json({ token, message: "success" ,userId:user.id}); 
         } catch (err) {
             console.log(err);
             res.status(500).json("Error logging in");
         }
     }
 };
+
 module.exports = authenticateUser;
