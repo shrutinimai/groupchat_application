@@ -1,14 +1,12 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // Retrieve the token from local storage
     const token = localStorage.getItem("token");
-    console.log("Token retrieved:", token); // Log the token
+    console.log("Token retrieved:", token); 
 
     if (!token) {
         console.error("No token found. User may not be logged in.");
-        return; // Exit if there's no token
+        return; 
     }
 
-    // Load existing messages when the page loads
     await loadMessages(token);
 
     document.getElementById("sendMessage").addEventListener("submit", async (e) => {
@@ -19,24 +17,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` // Include the token here
+                "Authorization": `Bearer ${token}` 
             },
             body: JSON.stringify({ message })
         });
 
         if (!response.ok) {
-            const errorText = await response.text(); // Get the error message
-            console.error("Error:", errorText); // Log the error message
-            return; // Exit if there's an error
+            const errorText = await response.text(); 
+            console.error("Error:", errorText); 
+            return; 
         }
 
-        const result = await response.json(); // Parse the response as JSON
+        const result = await response.json(); 
         console.log("Message sent:", result);
-        storeMessage(result); // Store the new message in local storage
-        displayMessages([result]); // Display the new message
-        document.getElementById("message").value = ''; // Clear the input field
+        storeMessage(result); 
+        displayMessages([result]); 
+        document.getElementById("message").value = ''; 
 
-        // Fetch all messages again to refresh the display
         await loadMessages(token);
     });
 
@@ -44,31 +41,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/api/messages", {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${token}` // Include the token here
+                "Authorization": `Bearer ${token}` 
             }
         });
 
         if (!response.ok) {
-            const errorText = await response.text(); // Get the error message
-            console.error("Error fetching messages:", errorText); // Log the error message
+            const errorText = await response.text(); 
+            console.error("Error fetching messages:", errorText); 
             return; // Exit if there's an error
         }
 
         const messages = await response.json();
-        displayMessages(messages); // Display the fetched messages
+        displayMessages(messages);
     }
 
     function displayMessages(messages) {
         const allMessages = document.getElementById("allMessages");
-        allMessages.innerHTML = ''; // Clear existing messages
+        allMessages.innerHTML = ''; 
 
-        // Check if messages is an array
         if (Array.isArray(messages)) {
             messages.forEach(msg => {
                 createMessageElement(msg, allMessages);
             });
         } else {
-            // If it's a single message object, create a message element for it
             createMessageElement(messages, allMessages);
         }
     }
@@ -77,8 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const messageDiv = document.createElement("div");
         messageDiv.classList.add("message");
 
-        // Check if the message is from the current user
-        if (msg.isCurrent) { // Adjust this check based on your logic
+        if (msg.isCurrent) { 
             messageDiv.classList.add("current-user");
             messageDiv.style.textAlign = "right";
             container.appendChild(document.createElement("br"))
@@ -88,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             container.appendChild(document.createElement("br"))
         }
 
-        messageDiv.innerText = `${msg.name || msg.userId}: ${msg.message}`; // Display user name or ID
+        messageDiv.innerText = `${msg.name || msg.userId}: ${msg.message}`; 
         container.appendChild(messageDiv);
     }
 
@@ -96,11 +90,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         let messages = JSON.parse(localStorage.getItem('messages')) || [];
         messages.push(message);
         
-        // Limit to the most recent 10 messages
         if (messages.length > 10) {
-            messages.shift(); // Remove the oldest message
+            messages.shift(); 
         }
         
-        localStorage.setItem('messages', JSON.stringify(messages)); // Save updated messages back to local storage
+        localStorage.setItem('messages', JSON.stringify(messages));
     }
 });
