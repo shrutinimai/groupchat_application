@@ -26,32 +26,39 @@
                     <button id="addGroupMemberButton" style="display: none;">Add+</button>
                     <button id="leaveGroupButton" style="display: none;">Leave</button>
                     <button id="deleteGroupMemberButton" style="display: none;">Delete</button>
-                </div> 
+                </div>
                 <div id="groupMessages"></div>
                 <form id="groupMessageForm">
-                    <input type="text" id="messageInput" placeholder="Type your message..." required>
-                    <button type="submit">Send</button>
+                    <input type="text" id="messageInput" placeholder="Type your message...">
+                    <input type="file" id="fileInput" style="display: none;"> 
+                    <button type="button" id="attachFileBtn">Attach File</button>
+                    <button type="submit" id="sendTextBtn">Send</button> 
+                    <button type="button" id="sendFileBtn" style="display: none;">Send File</button>
+                    <span id="fileNameDisplay" style="margin-left: 10px; color: #88bbd0;"></span>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal for adding group members -->
-    <div id="addMemberModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
-        <h3 id="modalTitle">Add/Remove Group Members</h3>
-        <ul id="userList"></ul> 
-        <button id="closeModal">Close</button>
+    <div id="addMemberModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Add/Remove Group Members</h3>
+            <ul id="userList"></ul>
+            <button id="closeModal" class="madel-button">Close</button>
+        </div>
     </div>
 
-    <!-- Modal for invitation alert -->
-    <div id="invitationAlert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
-        <p id="invitationMessage"></p>
-        <button id="acceptInvitation">Accept</button>
-        <button id="rejectInvitation">Reject</button>
+    <div id="invitationAlertModal" class="modal">
+        <div class="modal-content">
+            <p id="invitationMessage"></p>
+            <button id="acceptInvitation">Accept</button>
+            <button id="rejectInvitation">Reject</button>
+        </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
     <script src="/script/group.js"></script>
+    <!-- <script src="/script/admin.js"></script> --> 
 
 </body>
-
 </html>
