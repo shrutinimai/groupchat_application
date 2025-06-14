@@ -11,6 +11,11 @@ const GroupMessage = require('./groupmessageData');
 const Invite = require('./inviteData');
 const Message = require('./messageData'); // Your private message model
 
+// --- NEW IMPORTS FOR ARCHIVE MODELS ---
+const ArchivedGroupMessage = require('./archivedGroupMessage'); // Added for archiving
+const ArchivedMessage = require('./archivedMessage');       // Added for archiving
+// --- END NEW IMPORTS ---
+
 // Define associations
 // User and Group (through GroupMember) - Many-to-Many
 // Explicitly define 'as' aliases for clarity in queries
@@ -23,30 +28,24 @@ User.hasMany(GroupMember, { foreignKey: 'user_id' });
 GroupMember.belongsTo(Group, { foreignKey: 'group_id' });
 Group.hasMany(GroupMember, { foreignKey: 'group_id' });
 
-// Group and User (Creator) - One-to-Many
 Group.belongsTo(User, { as: 'Creator', foreignKey: 'creator_id' });
 User.hasMany(Group, { as: 'CreatedGroups', foreignKey: 'creator_id' });
 
-// GroupMessage and User/Group - Many-to-One
 GroupMessage.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(GroupMessage, { foreignKey: 'user_id' });
 
 GroupMessage.belongsTo(Group, { foreignKey: 'group_id' });
 Group.hasMany(GroupMessage, { foreignKey: 'group_id' });
 
-// Invite and User/Group - Many-to-One
 Invite.belongsTo(User, { foreignKey: 'user_id' });
 User.hasMany(Invite, { foreignKey: 'user_id' });
 
 Invite.belongsTo(Group, { foreignKey: 'group_id' });
 Group.hasMany(Invite, { foreignKey: 'group_id' });
 
-// Private Message and User - Many-to-One
 Message.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Message, { foreignKey: 'userId' });
 
-
-// Export all models and sequelize instance
 module.exports = {
     sequelize,
     User,
@@ -56,4 +55,6 @@ module.exports = {
     Invite,
     Message,
     Op,
+    ArchivedGroupMessage, 
+    ArchivedMessage,      
 };
